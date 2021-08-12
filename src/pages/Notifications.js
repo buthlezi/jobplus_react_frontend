@@ -1,11 +1,11 @@
 import React from 'react'
-import Hero from '../components/Hero';
+import PageTitle from '../components/PageTitle';
 import ListingsFilter from '../components/ListingsFilter';
 
-export default function JobListings() {
+export default function Notifications() {
   return (
     <>
-      <Hero heroType='plain' />
+      <PageTitle title='Notifications' />
       <ListingsFilter />
     </>
   )
