@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// create useState
 export default function Navbar() {
   const classes = useStyles();
 
@@ -77,6 +78,7 @@ export default function Navbar() {
   setOpenDrawer(false)
   }
 
+  // create tabIndex useState
   const [tabIndex, setTabIndex] = useState(false);
 
   const handleTabIndexChange = (event, index) => {
@@ -84,14 +86,15 @@ export default function Navbar() {
   }
 
   // array
+  // optimize links
   const routes = [
     {name: 'Home', link: '/', index: 0},
     {name: 'Job Listings', link: '/job-listings', index: 1},
     {name: 'Job Applications', link: '/job-applications', index: 2},
   ]
-
+  // useEffect to manage url path
+  // takes care of setting active link when refreshed
   useEffect(() => {
-    console.log('use effect...');
     routes.forEach(route => {
       switch (window.location.pathname) {
         case `${route.link}`:
@@ -99,15 +102,17 @@ export default function Navbar() {
           break;
         default:
           return false;
-      }
-    })
-  }, [window.location.pathname])
+        }
+      })
+    },
+  )
 
   return (
     <Box>
       <AppBar position="static" >
         <Toolbar className={classes.container}>
             <Hidden mdUp>
+              {/* call handleDrawerOpen state on MenuIcon onClick */}
               <IconButton
               edge='start'
               color='inherit'
@@ -119,16 +124,18 @@ export default function Navbar() {
         </Hidden>
         <Typography component="h6" className={classes.logo}>JOBPLUS</Typography>
         <Hidden smDown>
+          {/* add value and onChange onto tabs */}
           <Tabs 
             value={tabIndex}
             onChange={handleTabIndexChange}
             className={classes.tabs} 
             classes={{ indicator: classes.indicator}}
           >
+            {/* make tabs dynamic */}
             {routes.map((route, index) => (
               <Tab 
                 key={`${route}${index}`}
-                // concatenation requires `S{}`
+                // concatenation requires `${}`
                 label={route.name}
                 component={Link}
                 to={route.link}
@@ -160,7 +167,7 @@ export default function Navbar() {
             <PersonOutlineIcon />
           </IconButton>
           
-          <IconButton size='small' component={Link} to={'/exit'} color='inherit' edge='start' >
+          <IconButton size='small' component={Link} to={'/login'} color='inherit' edge='start' >
             <ExitToAppIcon />
           </IconButton>
           
@@ -173,11 +180,13 @@ export default function Navbar() {
         anchor="left" 
         open={openDrawer}>
         <div className={classes.drawerHeader}>
+          {/* set handleDrawerClose state on Chevron button */}
         <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
+        {/* make ListItem dynamic */}
         <List>
         {routes.map((route, index) => (  
           <ListItem 

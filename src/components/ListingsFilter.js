@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles';
 import { Hidden } from '@material-ui/core';
 import Filter from './Filter';
-import Listings from './Listings';
 // same level import
 
 
@@ -27,21 +26,38 @@ const useStyles = makeStyles ((theme) => ({
 
 }));
 
-export default function ListingFilter() {
+export default function ListingsFilter(props) {
+  // this gives the filter and the listings
   const classes = useStyles();
+  const { components } = props;
+
+  const sectors = [
+    { link: '/', name: 'Technology', count: 45 },
+    { link: '/', name: 'Engineering', count: 200 },
+    { link: '/', name: 'Healthcare', count: 50 },
+  ]
+
+  const locations = [
+    { link: '/', name: 'Jobs in London', count: 230 },
+    { link: '/', name: 'Jobs in West Midlands', count: 40 },
+    { link: '/', name: 'Jobs in Yorkshire', count: 25 },
+  ]
 
   return (
     <div className={classes.root}>
       <div className={classes.lblock}>
         {/* hide filters from small devices going downwards */}
         <Hidden smDown>  
-        <Filter />
-        <Filter />
+          <Filter title='Browse by sector' items={sectors} />
+          <Filter title='Browse by location' items={locations} />
         </Hidden>
       </div>
       <div className={classes.rblock}>
-        <Listings />
-        <Listings />
+        {/* loop thru listings passed into this (ListingsFilter) component
+        from relevant pages and print them out*/}
+        {components.map((comp) => (
+          comp
+        ))}
       </div>
     </div>
   )

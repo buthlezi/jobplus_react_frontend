@@ -9,7 +9,7 @@ const useStyles = makeStyles ((theme) => ({
     backgroundColor: theme.palette.common.light,
     padding: '1rem',
     minWidth: '220px',
-    marginBottom: '1rem'
+    marginBottom: '1rem',
   },
   title: {
     ...theme.fonts.extraBold,
@@ -37,18 +37,27 @@ const useStyles = makeStyles ((theme) => ({
   }
 }));  
 
-export default function Filter() {
+export default function Filter(props) {
   const classes = useStyles();
-
+  const { title, items } = props;
   return (
     <div className={classes.root}>
-      <Typography className={classes.title} variant='h1'>Browse by sector</Typography>
+      <Typography className={classes.title} variant='h1'>{title}</Typography>
+      {/* {}s allow Javascript to be written in HTML */}
 
       <ul className={classes.links}>
-        <li><Link to='/'>Technology<span>(14)</span></Link></li>
-        <li><Link to='/'>Engineering<span>(200)</span></Link></li>
-        <li><Link to='/'>Healthcare<span>(38)</span></Link></li>
+        {items.map((item) => (
+          <li>
+            <Link to={item.link}>
+              {item.name}
+                <span>
+                  ({item.count})
+                </span>
+            </Link>
+          </li>
+        ))}
       </ul>
+
     </div>
   )
 }
