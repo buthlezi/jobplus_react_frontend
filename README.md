@@ -11,8 +11,8 @@ In the project directory, you can run:
 This runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-This will launch the homepage of the JOBPLUS app
-You will be presented with a demo version
+This will launch the homepage of the JOBPLUS app.
+You will be presented with a demo version.
 The navigation buttons on the men bar will take you to 'Job Search', 'Notifications', 'Saved Jobs', 'Profile' ,'Login'.
 Clicking on 'JOBPLUS' will also take you to the homepage from any of these pages. 
 On a mobile device, the hamburger icon will also give options like 'Home', 'Job listing' and 'Job applications'. 
