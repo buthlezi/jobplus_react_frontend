@@ -61,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// create useState
+// create openDrawer useState
 export default function Navbar() {
   const classes = useStyles();
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  // openDrawer is a Boolean variable, setOpenDrawer is a function 
+  // openDrawer is a Boolean variable, setOpenDrawer is a function
   // used to alter the variable's state
 
   const handleDrawerOpen = () => {
@@ -85,7 +85,9 @@ export default function Navbar() {
     setTabIndex(index)
   }
 
-  // array
+  // array of objects
+  // note: the array indexes are 0,1,2 - used in .map method below - line 137
+  // note the key, value1, value2 structure in the objects
   // optimize links
   const routes = [
     {name: 'Home', link: '/', index: 0},
@@ -93,7 +95,7 @@ export default function Navbar() {
     {name: 'Job Applications', link: '/job-applications', index: 2},
   ]
   // useEffect to manage url path
-  // takes care of setting active link when refreshed
+  // takes care of remembering selected link when page is refreshed
   useEffect(() => {
     routes.forEach(route => {
       switch (window.location.pathname) {
@@ -125,24 +127,28 @@ export default function Navbar() {
         <Typography component="h6" className={classes.logo}>JOBPLUS</Typography>
         <Hidden smDown>
           {/* add value and onChange onto tabs */}
-          <Tabs 
+          <Tabs
             value={tabIndex}
             onChange={handleTabIndexChange}
-            className={classes.tabs} 
+            className={classes.tabs}
             classes={{ indicator: classes.indicator}}
           >
             {/* make tabs dynamic */}
+              {/* route is a single object in the array
+              index in one of the values in each object */}
             {routes.map((route, index) => (
-              <Tab 
+              <Tab
                 key={`${route}${index}`}
-                // concatenation requires `${}`
+                // string concatenation requires `${}${}`
+                // route and index are used for the key bcuz key has to be unique
+                // why is route alone not sufficient as a key ?
                 label={route.name}
                 component={Link}
                 to={route.link}
               />
-            ))} 
+            ))}
 
-          
+
           </Tabs>
         </Hidden>
 
@@ -166,18 +172,18 @@ export default function Navbar() {
           <IconButton size='small' component={Link} to={'/profile'} color='inherit' edge='start' >
             <PersonOutlineIcon />
           </IconButton>
-          
+
           <IconButton size='small' component={Link} to={'/login'} color='inherit' edge='start' >
             <ExitToAppIcon />
           </IconButton>
-          
+
         </Box>
         </Toolbar>
       </AppBar>
-     
-      <Drawer 
-        variant="persistent" 
-        anchor="left" 
+
+      <Drawer
+        variant="persistent"
+        anchor="left"
         open={openDrawer}>
         <div className={classes.drawerHeader}>
           {/* set handleDrawerClose state on Chevron button */}
@@ -188,13 +194,13 @@ export default function Navbar() {
         <Divider />
         {/* make ListItem dynamic */}
         <List>
-        {routes.map((route, index) => (  
-          <ListItem 
-            key={`${route}${index}`} 
-            component={Link} 
-            to={route.link} 
+        {routes.map((route, index) => (
+          <ListItem
+            key={`${route}${index}`}
+            component={Link}
+            to={route.link}
             selected={window.location.pathname === route.link}
-            onClick={handleDrawerClose} 
+            onClick={handleDrawerClose}
             button>
               <ListItemText primary={route.name} />
           </ListItem>
